@@ -1,3 +1,7 @@
+const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') 
+    ? "http://localhost:5000" 
+    : "https://food-app-1-vi4v.onrender.com";
+
 // ---------------- Session & Nav ----------------
 function checkSession() {
     const user = localStorage.getItem("loggedUser");
@@ -30,7 +34,7 @@ async function apiRegister() {
     if (!name || !email || !pass) return showPopup("Please fill all fields", "error");
 
     try {
-        const res = await fetch("http://localhost:5000/users/register", {
+        const res = await fetch(API_BASE + "/users/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, email, pass })
@@ -55,7 +59,7 @@ async function apiLogin() {
     if (!email || !pass) return showPopup("Please fill all fields", "error");
 
     try {
-        const res = await fetch("http://localhost:5000/users/login", {
+        const res = await fetch(API_BASE + "/users/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, pass })
@@ -268,7 +272,7 @@ async function bookTable() {
     const restaurant_id = localStorage.getItem("currentRes") || 1;
 
     try {
-        const res = await fetch("http://localhost:5000/reservations/book", {
+        const res = await fetch(API_BASE + "/reservations/book", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, restaurant_id, guests, time })
@@ -393,7 +397,7 @@ async function placeOrder() {
     const formattedItems = Object.values(counts);
 
     try {
-        const res = await fetch("http://localhost:5000/orders/place", {
+        const res = await fetch(API_BASE + "/orders/place", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -424,7 +428,7 @@ async function loadHistory() {
 
     const box = document.getElementById("orderHistory");
     try {
-        const res = await fetch("http://localhost:5000/orders/history/" + email);
+        const res = await fetch(API_BASE + "/orders/history/" + email);
         const orders = await res.json();
 
         if (orders.length === 0) {
