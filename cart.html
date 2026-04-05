@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart | MealMate</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Leaflet for Google Map look -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body onload="loadCart()">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="home.html" class="nav-brand">MealMate</a>
+        <div class="nav-actions">
+            <a href="home.html" class="nav-item">🏠 Home</a>
+            <a href="history.html" class="nav-item">History</a>
+            <span class="nav-user"><span id="navUserName">User</span></span>
+            <div class="cart-btn" onclick="window.location.href='cart.html'">
+                🛒 Cart <span id="cartCount" class="cart-count">0</span>
+            </div>
+            <a href="#" class="nav-item" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+
+    <header class="cart-header" style="padding: 2rem 8%; background: white; border-bottom: 1px solid #eee;">
+        <h1>Secure Checkout</h1>
+        <p style="color: #696969; margin-top: 5px;">One step away from your delicious meal</p>
+    </header>
+
+    <main class="main-content"
+        style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 400px; gap: 2rem; padding: 2rem 5%;">
+
+        <div class="cart-left">
+            <!-- Delivery Location -->
+            <div class="cart-summary-card"
+                style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 2rem;">
+                <h3>Delivery Location</h3>
+                <p id="locationText" style="margin-top: 10px; color: var(--text-muted);">🏠 Current: Sector 12,
+                    Bhubaneswar</p>
+                <button class="toggle-btn"
+                    style="margin-top: 15px; border-color: var(--primary); color: var(--primary); padding: 8px 15px; border-radius: 6px; background: transparent; cursor: pointer;"
+                    onclick="showLocationPicker()">Change Location</button>
+
+                <div id="locationPicker" class="hidden"
+                    style="margin-top: 1.5rem; border-top: 1px solid #eee; padding-top: 1.5rem;">
+                    <h4 style="margin-bottom:10px">Select address on map</h4>
+                    <div id="trackingMap" style="height: 350px; width:100%; border-radius:12px; border:1px solid #ddd">
+                    </div>
+                    <button class="auth-btn" style="margin-top: 20px; width: auto; padding: 12px 30px;"
+                        onclick="hideLocationPicker()">Confirm Address</button>
+                </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="cart-summary-card"
+                style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+                <h3>Select Payment Method</h3>
+                <div class="payment-selection" style="margin-top: 15px;">
+                    <label style="display: block; margin-bottom: 15px; cursor: pointer;">
+                        <input type="radio" name="payment" value="UPI" checked>
+                        <span style="margin-left: 10px; font-size: 1.1rem;">UPI (Google Pay, PhonePe, Paytm)</span>
+                    </label>
+                    <label style="display: block; margin-bottom: 15px; cursor: pointer;">
+                        <input type="radio" name="payment" value="Card">
+                        <span style="margin-left: 10px; font-size: 1.1rem;">Credit / Debit Card</span>
+                    </label>
+                    <label style="display: block; cursor: pointer;">
+                        <input type="radio" name="payment" value="Cash">
+                        <span style="margin-left: 10px; font-size: 1.1rem;">Cash on Delivery</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart-right" style="width: 600px;">
+            <!-- Order Summary -->
+            <div class="cart-summary-card"
+                style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #eee; position: sticky; top: 100px;">
+                <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 10px;">Order Summary
+                </h3>
+                <div id="cartItems">
+                    <!-- Dynamically populated -->
+                </div>
+
+                <!-- Promo Code -->
+                <div class="promo-section" style="margin: 1.5rem 0; display: flex; gap: 8px;">
+                    <input type="text" id="promoCode" placeholder="Promo code (MEALMATE20)"
+                        style="flex:1; padding: 12px; border-radius: 8px; border:1px solid #ddd; font-size: 0.9rem;">
+                    <button class="toggle-btn"
+                        style="background: var(--secondary); color: white; border: none; padding: 0 15px; border-radius: 8px; cursor: pointer;"
+                        onclick="applyPromo()">Apply</button>
+                </div>
+
+                <hr style="margin: 1.5rem 0; border: none; border-top: 1px dashed #ddd;">
+
+                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                    <div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700; margin-bottom: 5px;">
+                            GRAND TOTAL</p>
+                        <h2 style="font-size: 2rem; color: var(--secondary);">₹<span id="totalPrice">0</span></h2>
+                    </div>
+                    <button class="auth-btn" style="width: auto; padding: 15px 40px; border-radius: 10px;"
+                        onclick="placeOrder()">Place Order</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

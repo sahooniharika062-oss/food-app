@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | MealMate</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="loadHome()">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">MealMate</div>
+        <div class="nav-actions">
+            <a href="home.html" class="nav-item">🏠 Home</a>
+            <a href="history.html" class="nav-item">History</a>
+            <span class="nav-user"><span id="navUserName">User</span></span>
+            <div class="cart-btn" onclick="window.location.href='cart.html'">
+                🛒 Cart <span id="cartCount" class="cart-count">0</span>
+            </div>
+            <a href="#" class="nav-item" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="home-hero">
+        <h1>Find the best food & drinks</h1>
+        <div class="search-bar-container">
+            <input type="text" id="searchBox" placeholder="Search for restaurants, cuisines or dishes..."
+                onkeyup="searchItems()">
+            <span class="mic-btn" onclick="startVoiceSearch()">🎤</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Filters -->
+        <div class="filter-bar">
+            <button id="vegToggleBtn" class="toggle-btn" onclick="toggleVegMode()">Veg Mode Off</button>
+            <span class="nav-item">Filter by: ⭐ 4.0+ • Pure Veg • Fast Delivery</span>
+        </div>
+
+        <!-- Rounded Food Categories (Zomato style) -->
+        <div class="categories-section">
+            <h2 class="section-title">Inspiration for your first order</h2>
+            <div class="category-scroll">
+                <div class="category-item" onclick="filterByCategory('Biryani')">
+                    <div class="category-img-wrapper">
+                        <img src="images/biriyani.jpg" alt="Biryani">
+                    </div>
+                    <p>Biryani</p>
+                </div>
+                <div class="category-item" onclick="filterByCategory('Pizza')">
+                    <div class="category-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=200&h=200&fit=crop"
+                            alt="Pizza">
+                    </div>
+                    <p>Pizza</p>
+                </div>
+                <div class="category-item" onclick="filterByCategory('Burgers')">
+                    <div class="category-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=200&fit=crop"
+                            alt="Burgers">
+                    </div>
+                    <p>Burgers</p>
+                </div>
+                <div class="category-item" onclick="filterByCategory('Chicken')">
+                    <div class="category-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=200&h=200&fit=crop"
+                            alt="Chicken">
+                    </div>
+                    <p>Chicken</p>
+                </div>
+                <div class="category-item" onclick="filterByCategory('Thali')">
+                    <div class="category-img-wrapper">
+                        <img src="images/thali.jpg" alt="Thali">
+                    </div>
+                    <p>Thali</p>
+                </div>
+                <div class="category-item" onclick="filterByCategory('Paneer')">
+                    <div class="category-img-wrapper">
+                        <img src="images/paneer.jpg" alt="Paneer">
+                    </div>
+                    <p>Paneer</p>
+                </div>
+                <div class="category-item" onclick="filterByCategory('Sweets')">
+                    <div class="category-img-wrapper">
+                        <img src="images/sweets.jpg" alt="Sweets">
+                    </div>
+                    <p>Sweets</p>
+                </div>
+                <div class="category-item" onclick="filterByCategory('Momo')">
+                    <div class="category-img-wrapper">
+                        <img src="images/momo.jpg" alt="momo">
+                    </div>
+                    <p>momo</p>
+                </div>
+                <div class="category-item" onclick="filterByCategory('Dosa')">
+                    <div class="category-img-wrapper">
+                        <img src="images/dosa.jpg" alt="Dosa">
+                    </div>
+                    <p>Dosa</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Top restaurants in Bhubaneswar</h2>
+        <div id="restaurantGrid" class="restaurant-grid">
+            <!-- Dynamically populated -->
+        </div>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

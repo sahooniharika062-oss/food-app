@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Orders | MealMate</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadHistory()">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="home.html" class="nav-brand">MealMate</a>
+        <div class="nav-actions">
+            <a href="home.html" class="nav-item">🏠 Home</a>
+            <a href="history.html" class="nav-item">History</a>
+            <span class="nav-user"><span id="navUserName">User</span></span>
+            <div class="cart-btn" onclick="window.location.href='cart.html'">
+                🛒 Cart <span id="cartCount" class="cart-count">0</span>
+            </div>
+            <a href="#" class="nav-item" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+
+    <header class="cart-header" style="background: white; padding: 2.5rem 8%; border-bottom: 1px solid #eee;">
+        <h1>Your Orders</h1>
+        <p style="color: #696969; margin-top: 8px;">Relive your favorite meals</p>
+    </header>
+
+    <main id="orderHistory" class="main-content" style="max-width: 900px; margin: 0 auto; padding: 2rem 5%;">
+        <!-- Dynamically populated -->
+        <p class="text-center" style="padding: 4rem;">Loading your order history...</p>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

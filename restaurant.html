@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu | MealMate</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadMenu()">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="home.html" class="nav-brand">MealMate</a>
+        <div class="nav-actions">
+            <a href="home.html" class="nav-item">🏠 Home</a>
+            <a href="history.html" class="nav-item">History</a>
+            <span class="nav-user"><span id="navUserName">User</span></span>
+            <div class="cart-btn" onclick="window.location.href='cart.html'">
+                🛒 Cart <span id="cartCount" class="cart-count">0</span>
+            </div>
+            <a href="#" class="nav-item" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Restaurant Header -->
+    <header class="res-detail-hero">
+        <div class="res-header">
+            <div>
+                <h1 id="resName" style="font-size: 2.5rem; margin-bottom: 5px;">Restaurant Name</h1>
+                <p id="resType" style="color: #696969; font-size: 1.1rem;">Bakery, Desserts, Beverages</p>
+            </div>
+            <div class="rating-tag" style="background:#24963F; padding: 8px 15px; border-radius: 10px; font-size: 1.2rem;">
+                ⭐ 4.2
+            </div>
+        </div>
+    </header>
+
+    <!-- Tabs Selection -->
+    <div style="padding: 1rem 8%; background: white; border-bottom: 1px solid #eee; display: flex; gap: 2rem;">
+        <span class="nav-item active" style="border-bottom: 2px solid var(--primary); padding-bottom: 1rem;" onclick="showTab('menuGrid')">Order Online</span>
+        <span class="nav-item" onclick="showTab('bookingSection')">Book a Table</span>
+    </div>
+
+    <!-- Menu Section -->
+    <main id="menuGrid" class="main-content menu-grid">
+        <!-- Dynamically populated -->
+    </main>
+
+    <!-- Booking Section -->
+    <main id="bookingSection" class="main-content hidden">
+        <div class="booking-card">
+            <h2 class="section-title">Reserve a Table</h2>
+            <p>Select number of guests and time</p>
+            <br>
+            <label>Guests</label>
+            <input type="number" id="guestCount" class="booking-input" min="1" max="10" value="2">
+            
+            <label>Date & Time</label>
+            <input type="datetime-local" id="bookingTime" class="booking-input">
+            
+            <button class="auth-btn" onclick="bookTable()">Confirm Booking</button>
+        </div>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script>
+        function showTab(tabId) {
+            document.getElementById('menuGrid').classList.add('hidden');
+            document.getElementById('bookingSection').classList.add('hidden');
+            document.getElementById(tabId).classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

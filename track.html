@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order | MealMate</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Leaflet for Zomato-style Map Tracking -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body onload="updateTracking()">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="home.html" class="nav-brand">MealMate</a>
+        <div class="nav-actions">
+            <a href="home.html" class="nav-item">🏠 Home</a>
+            <a href="history.html" class="nav-item">History</a>
+            <span class="nav-user"><span id="navUserName">User</span></span>
+            <div class="cart-btn" onclick="window.location.href='cart.html'">
+                🛒 Cart <span id="cartCount" class="cart-count">0</span>
+            </div>
+            <a href="#" class="nav-item" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+
+    <header class="cart-header" style="text-align: center; padding: 3rem 1rem;">
+        <h1 id="trackMainTitle">Your Order is on the way!</h1>
+        <p id="trackStatusText" style="color: var(--text-muted); margin-top: 10px;">Your rider is arriving in 25 mins
+        </p>
+    </header>
+
+    <main class="cart-page-container">
+        <!-- Status Stepper -->
+        <div class="tracking-stepper">
+            <div class="step active">
+                <span class="step-label">Placed</span>
+            </div>
+            <div class="step">
+                <span class="step-label">Preparing</span>
+            </div>
+            <div class="step">
+                <span class="step-label">Out for Delivery</span>
+            </div>
+            <div class="step">
+                <span class="step-label">Arrived</span>
+            </div>
+        </div>
+
+        <!-- Simulated Map Tracking -->
+        <div style="position: relative;">
+            <h2 id="trackStatus"
+                style="position: absolute; top: 20px; left: 20px; z-index: 1000; background: var(--white); padding: 8px 20px; border-radius: 50px; font-size: 0.95rem; border: 1px solid var(--border-light); font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                Order Received</h2>
+
+            <div id="trackingMap">
+                <div class="map-bg"></div>
+                <div class="rider-sim" id="riderIcon">🛵</div>
+                <!-- Delivery Pin -->
+                <div
+                    style="position: absolute; bottom: 30px; right: 8%; font-size: 3rem; z-index: 5; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));">
+                    🏠</div>
+            </div>
+        </div>
+
+        <div class="cart-summary-card"
+            style="margin-top: 2rem; display: flex; align-items: center; gap: 1.5rem; background: var(--white); padding: 20px; border-radius: 15px; border: 1px solid var(--border-light);">
+            <img src="images/items/delivery.jpg"
+                style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+            <div style="flex-grow: 1;">
+                <h4 style="font-size: 1.15rem; font-weight: 700;">Devil Raaj</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Your Delivery Partner (⭐⭐⭐⭐ 4.8)</p>
+            </div>
+            <button class="auth-btn"
+                style="width: auto; padding: 10px 20px; font-size: 0.9rem; background: var(--green);">📞 CALL
+                RIDER</button>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Zomato-style Map Tracking
+        function initZomatoMap() {
+            if (typeof L === 'undefined') return;
+            const mapContainer = document.getElementById('trackingMap');
+            // Remove the CSS placeholder elements so Leaflet can take over
+            const bg = mapContainer.querySelector('.map-bg');
+            if (bg) bg.remove();
+            const riderSim = document.getElementById('riderIcon');
+            if (riderSim) riderSim.style.display = 'none';
+
+            window.liveMapMap = L.map('trackingMap', { zoomControl: false }).setView([20.2961, 85.8245], 14);
+            L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+                attribution: '&copy; Google Maps'
+            }).addTo(window.liveMapMap);
+
+            // Create a route for the rider
+            window.liveRouteCoords = [
+                [20.3010, 85.8200], // Start (Restaurant)
+                [20.2980, 85.8220],
+                [20.2970, 85.8235],
+                [20.2961, 85.8245]  // End (User House)
+            ];
+
+            // Draw route line
+            L.polyline(window.liveRouteCoords, { color: '#E23744', weight: 4, dashArray: '5, 10' }).addTo(window.liveMapMap);
+
+            // Add icons
+            const houseIcon = L.divIcon({ html: '🏠', className: '', iconSize: [30, 30] });
+            const riderIcon = L.divIcon({ html: '🛵', className: '', iconSize: [30, 30] });
+
+            L.marker(window.liveRouteCoords[window.liveRouteCoords.length - 1], { icon: houseIcon }).addTo(window.liveMapMap);
+            window.liveMapMarker = L.marker(window.liveRouteCoords[0], { icon: riderIcon }).addTo(window.liveMapMap);
+        }
+
+        // Ensure map initializes when track.html is loaded
+        window.addEventListener('DOMContentLoaded', initZomatoMap);
+    </script>
+    <script src="app.js"></script>
+</body>
+
+</html>

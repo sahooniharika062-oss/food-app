@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Food Online | MealMate</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="checkSession()">
+    <div class="page-overlay"></div>
+    <div class="container">
+        <h1 class="auth-logo">MealMate</h1>
+
+        <!-- Login Box -->
+        <div id="loginBox">
+            <h3>Login</h3>
+            <div class="input-group">
+                <input id="loginEmail" type="email" placeholder="Email address" required>
+            </div>
+            <div class="input-group">
+                <input id="loginPass" type="password" placeholder="Password" required>
+            </div>
+            <button class="auth-btn" style="margin-bottom:1.5rem" onclick="apiLogin()">Log in</button>
+
+            <div class="social-auth">
+                <p>or</p>
+                <div class="social-btns">
+                    <div class="s-btn"> <img src="images/facebook.png" alt="logo" style="width: 50px;"></div>
+                    <div class="s-btn"> <img src="images/google.png" alt="logo" style="width: 50px;"></div>
+                </div>
+            </div>
+
+            <p class="text-center" style="margin-top:2rem; font-size: 1.05rem; color: #444;">
+                New to MealMate?
+                <span
+                    style="color:var(--primary); cursor:pointer; font-weight:700; border-bottom:1px solid var(--primary);"
+                    onclick="showRegister()">Create account</span>
+            </p>
+        </div>
+
+        <!-- Register Box -->
+        <div id="registerBox" class="hidden">
+            <h3>Register</h3>
+            <div class="input-group">
+                <input id="regName" type="text" placeholder="Full Name" required>
+            </div>
+            <div class="input-group">
+                <input id="regEmail" type="email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+                <input id="regPass" type="password" placeholder="Create Password" required>
+            </div>
+            <button class="auth-btn" style="margin-bottom:1.5rem" onclick="apiRegister()">Create Account</button>
+
+            <div class="social-auth">
+                <p>or</p>
+                <div class="social-btns">
+                    <div class="s-btn">G</div>
+                    <div class="s-btn">F</div>
+                </div>
+            </div>
+
+            <p class="text-center" style="margin-top:2rem; font-size: 1.05rem; color: #444;">
+                Already have an account?
+                <span
+                    style="color:var(--primary); cursor:pointer; font-weight:700; border-bottom:1px solid var(--primary);"
+                    onclick="showLogin()">Log in</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
