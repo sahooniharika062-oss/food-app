@@ -33,6 +33,9 @@ async function apiRegister() {
 
     if (!name || !email || !pass) return showPopup("Please fill all fields", "error");
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return showPopup("Please enter a valid email address", "error");
+
     try {
         const res = await fetch(API_BASE + "/users/register", {
             method: "POST",
@@ -57,6 +60,9 @@ async function apiLogin() {
     let pass = document.getElementById("loginPass").value;
 
     if (!email || !pass) return showPopup("Please fill all fields", "error");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return showPopup("Please enter a valid email address", "error");
 
     try {
         const res = await fetch(API_BASE + "/users/login", {
@@ -327,6 +333,15 @@ function addToCart(name, price, image) {
     showPopup("✔ Added to cart", "success");
 }
 
+function removeFromCart(itemName) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart = cart.filter(item => item.name !== itemName);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateNav();
+    loadCart();
+    showPopup("Item removed", "success");
+}
+
 let discount = 0;
 function applyPromo() {
     const code = document.getElementById("promoCode").value.toUpperCase();
@@ -361,13 +376,17 @@ function loadCart() {
 
     Object.values(counts).forEach(item => {
         total += item.price * item.qty;
+        let safeName = item.name.replace(/'/g, "\\'");
         list.innerHTML += `
-            <div class="order-item">
+            <div class="order-item" style="position: relative;">
                 <div class="order-item-detail">
                     <img src="${item.image}">
                     <div><h4>${item.name}</h4><p>₹${item.price} x ${item.qty}</p></div>
                 </div>
-                <div class="price">₹${item.price * item.qty}</div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div class="price">₹${item.price * item.qty}</div>
+                    <button onclick="removeFromCart('${safeName}')" style="background: transparent; border: none; color: #ff4d4d; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; height: 30px; width: 30px; border-radius: 50%;" title="Remove Item">✖</button>
+                </div>
             </div>
         `;
     });
